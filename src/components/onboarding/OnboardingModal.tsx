@@ -7,6 +7,7 @@ import AssessmentScreen from './AssessmentScreen';
 import TourScreen from './TourScreen';
 import DemoScreen from './DemoScreen';
 import CompletionScreen from './CompletionScreen';
+import { OnboardingSurvey } from './OnboardingSurvey';
 
 const OnboardingModal: React.FC = () => {
   const { currentStep } = useOnboarding();
@@ -36,7 +37,7 @@ const OnboardingModal: React.FC = () => {
     default:
       return null;
   }
-  
+
   // For tour screen, we don't need the modal background
   if (currentStep === 'tour') {
     return <ScreenComponent />;
@@ -50,7 +51,11 @@ const OnboardingModal: React.FC = () => {
         exit={{ opacity: 0 }}
         className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
       >
-        <ScreenComponent />
+        {currentStep === 'complete' ? (
+          <OnboardingSurvey />
+        ) : (
+          <ScreenComponent />
+        )}
       </motion.div>
     </AnimatePresence>
   );

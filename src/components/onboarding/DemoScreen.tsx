@@ -1,9 +1,10 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useOnboarding } from '@/contexts/OnboardingContext';
 import { Play, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { AnimatedTourVideo } from './AnimatedTourVideo';
+import { LearningVideo } from './LearningVideo';
 
 interface DemoFeature {
   id: string;
@@ -20,7 +21,7 @@ const DemoScreen: React.FC = () => {
       id: 'appointments',
       title: 'Schedule an Appointment',
       description: 'Learn how to schedule a virtual or in-person appointment with your healthcare provider.',
-      demoGif: 'appointment-demo.gif', // This would be a path to your actual GIF
+      demoGif: 'appointment-demo.gif',
       completed: false,
     },
     {
@@ -46,7 +47,6 @@ const DemoScreen: React.FC = () => {
     setActiveDemo(featureId);
     setDemoPlaying(true);
     
-    // Simulate the demo completing after a few seconds
     setTimeout(() => {
       setDemoPlaying(false);
       setDemoFeatures(features => features.map(feature => 
@@ -70,27 +70,16 @@ const DemoScreen: React.FC = () => {
 
       {activeDemo ? (
         <div className="mb-6">
-          <div className="bg-gray-100 rounded-lg aspect-video flex items-center justify-center relative overflow-hidden mb-4">
-            {demoPlaying ? (
-              <div className="animate-pulse absolute inset-0 flex items-center justify-center bg-healthBlue/10">
-                <div className="text-center">
-                  <div className="inline-block rounded-full bg-white p-3 mb-2">
-                    <Play size={24} className="text-healthBlue ml-1" />
-                  </div>
-                  <p className="text-healthBlue font-medium">Demo Playing...</p>
-                </div>
-              </div>
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center bg-healthPurple/10">
-                <div className="text-center">
-                  <div className="inline-block rounded-full bg-white p-3 mb-2">
-                    <CheckCircle size={24} className="text-healthPurple" />
-                  </div>
-                  <p className="text-healthPurple font-medium">Demo Completed</p>
-                </div>
-              </div>
-            )}
-          </div>
+          <AnimatedTourVideo
+            videoUrl={`/demo-videos/${activeDemo}.mp4`}
+            title={demoFeatures.find(f => f.id === activeDemo)?.title || ''}
+            description={demoFeatures.find(f => f.id === activeDemo)?.description || ''}
+          />
+          
+          <LearningVideo
+            videoId="demo123"
+            title="Learn More About This Feature"
+          />
           
           <Button 
             variant="outline" 

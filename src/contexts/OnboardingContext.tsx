@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type OnboardingStep = 
@@ -7,7 +6,8 @@ type OnboardingStep =
   | 'assessment'
   | 'tour'
   | 'demo'
-  | 'complete';
+  | 'complete'
+  | 'survey';
 
 interface OnboardingContextType {
   currentStep: OnboardingStep;
@@ -35,7 +35,8 @@ const STEPS_ORDER: OnboardingStep[] = [
   'assessment',
   'tour',
   'demo',
-  'complete'
+  'complete',
+  'survey'
 ];
 
 export const OnboardingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -78,7 +79,7 @@ export const OnboardingProvider: React.FC<{ children: ReactNode }> = ({ children
     }));
   };
 
-  // Calculate progress percentage
+  // Calculate progress percentage including the survey step
   const progress = currentStep === 'inactive' 
     ? 0 
     : Math.round(((STEPS_ORDER.indexOf(currentStep) - 1) / (STEPS_ORDER.length - 2)) * 100);
