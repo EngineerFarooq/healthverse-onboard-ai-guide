@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOnboarding } from '@/contexts/OnboardingContext';
@@ -8,6 +7,7 @@ import TourScreen from './TourScreen';
 import DemoScreen from './DemoScreen';
 import CompletionScreen from './CompletionScreen';
 import { OnboardingSurvey } from './OnboardingSurvey';
+import { ChatBot } from '../chat/ChatBot';
 
 const OnboardingModal: React.FC = () => {
   const { currentStep } = useOnboarding();
@@ -40,7 +40,12 @@ const OnboardingModal: React.FC = () => {
 
   // For tour screen, we don't need the modal background
   if (currentStep === 'tour') {
-    return <ScreenComponent />;
+    return (
+      <>
+        <ScreenComponent />
+        <ChatBot />
+      </>
+    );
   }
   
   return (
@@ -56,6 +61,7 @@ const OnboardingModal: React.FC = () => {
         ) : (
           <ScreenComponent />
         )}
+        <ChatBot />
       </motion.div>
     </AnimatePresence>
   );
